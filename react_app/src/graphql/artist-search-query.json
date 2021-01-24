@@ -1,0 +1,1 @@
+"query artistSearch($artist: String!) { artistSearch(artist: $artist) { mbid name disambiguation} }"

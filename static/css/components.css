@@ -1,0 +1,102 @@
+html {
+    font-size: 12px;
+}
+
+h1 {
+    font-size: 20px;
+}
+
+h5 {
+    font-size: 15px
+}
+
+h6 {
+    font-size: 12px
+}
+
+#app {
+    font-family: 'Raleway', sans-serif;
+}
+
+.background {
+    background-color: #d5d5d5;
+}
+
+.hover {
+    cursor: pointer;
+    background-color: black;
+    opacity: 0.5
+}
+
+.ontop {
+    z-index: 100
+}
+
+#logo {
+    left: 1vw;
+    top: 1vh;
+    position: fixed;
+    width: 20vw;
+    height: 8vh
+}
+
+#logout-span,
+#logout {
+    color: #5e5d5d;
+    right: 1vw;
+    top: 1vh;
+    height: 25px;
+    width: 25px;
+    position: fixed;
+    cursor: pointer;
+}
+
+#password {
+    position: fixed;
+    top: 20vh;
+    right: 45vw;
+}
+
+#instructions {
+    position: fixed;
+    top: 25vh;
+    right: 25vw;
+    height: 50vh;
+    width: 50vw;
+}
+
+#lyric-app-wrapper {
+    position: fixed;
+    top: 10vh;
+    height: 80vh;
+    left: 5vw;
+    width: 90vw
+}
+
+#tech-stack {
+    width: 25vw
+}
+
+#lyric-app {
+    width: 60vw;
+}
+
+#stack-list *{
+    margin-top: 1vh;
+}
+
+.clickable {
+    cursor: pointer
+}
+
+#add-artist-modal {
+    position: fixed;
+    top: 20vh;
+    right: 20vw;
+    height: 30vh;
+    width: 35vw;
+}
+
+#add-artist-input {
+    width: 30vw !important;
+}

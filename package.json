@@ -1,0 +1,10 @@
+{
+  "name": "aire-logic-lyrics-app",
+  "engines": {
+    "node": "14.15.4",
+    "npm": "6.14.11"
+  },
+  "scripts": {
+    "heroku-postbuild": "cd react_app && npm install && npm run build && cd ..  && python manage.py migrate && python manage.py collectstatic --noinput"
+  }
+}

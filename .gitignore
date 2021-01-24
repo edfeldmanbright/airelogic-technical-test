@@ -1,0 +1,12 @@
+/.idea
+/venv/
+**__pycache__
+**/__pycache__
+**/.pytest_cache
+**/test/__pycache__
+**/migrations/__pycache__
+/staticfiles/
+**/node_modules/
+/react_app/dist/static
+/react_app/stats.json
+/react_app/schema.graphql

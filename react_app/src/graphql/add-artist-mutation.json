@@ -1,0 +1,1 @@
+"mutation addArtist($mbid: String!, $name: String!) { addArtist(mbid: $mbid, name: $name) { artist { name statistics { songCount averageWordLength } } } }"

@@ -38,6 +38,7 @@ describe('Schema tests', () => {
     const {mockQuery, querySpy} = mockArtistSearchQuery()
     mocks.push(mockQuery)
     await act(async () => render(<LyricApp artistList={artistList}/>))
+    expect(find('#statistics-chart')).toBeNull()
     expect(find('#add-artist')).not.toBeNull()
     click('#add-artist')
     expect(find('#add-artist-modal')).not.toBeNull()
@@ -52,6 +53,7 @@ describe('Schema tests', () => {
     await act(async () => click('#artist-0'))
     await waitFor(1000)
     expect(mutationSpy).toHaveBeenCalledTimes(1)
+    expect(find('#statistics-chart')).not.toBeNull()
   });
   test('Log in', async () => {
     const {mockMutation, mutationSpy} = mockLoginMutation()

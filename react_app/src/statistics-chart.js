@@ -27,6 +27,7 @@ export const StatisticsChart = ({artists, type}) => {
 
   return (
     <Bar
+      id='statistics-chart'
       data={data}
       options={options}
       title={deCamelize(type)}

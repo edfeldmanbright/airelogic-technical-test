@@ -37,7 +37,7 @@ const mockArtistSearchResult = () => {
     data: {
       artistSearch: [
         {
-          mbid: 'asfasgasgasgqe',
+          mbid: 'abc-abc-abc-abc',
           name: 'Johnny Cash',
           disambiguation: 'Country folk legend'
         }
@@ -94,7 +94,7 @@ export const mockArtistSearchQuery = () => {
 export const mockAddArtistMutation = () => {
   const mutationSpy = jest.fn();
   const mutation = {
-    request: {query: ADD_ARTIST, variables: {name: 'test', mbid: 'tasdas-asdas'}},
+    request: {query: ADD_ARTIST, variables: {name: 'Johnny Cash', mbid: 'abc-abc-abc-abc'}},
     result: () => {
       mutationSpy();
       return mockAddArtistResult()

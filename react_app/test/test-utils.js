@@ -8,6 +8,7 @@ import {MemoryRouter} from 'react-router-dom'
 import {MockedProvider} from '@apollo/client/testing';
 import {act} from "@testing-library/react";
 import wait from "waait";
+import 'jest-canvas-mock';
 
 export const createContainer = () => {
   const container = document.createElement('div');

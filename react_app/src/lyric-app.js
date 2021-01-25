@@ -13,12 +13,13 @@ export const ArtistLoader = () => {
   const {loading, error, data} = useQuery(ARTIST_LIST_QUERY)
   if (loading || error) return <></>
   const artistList = deepCopy(data.artistList)
-  return <LyricApp artistList={artistList}/>
+  return <LyricApp artistListProp={artistList}/>
 }
 
 
-export const LyricApp = ({artistList}) => {
+export const LyricApp = ({artistListProp}) => {
 
+  const [artistList, setArtistList] = useState(artistListProp)
   const [artists, setArtists] = useState([])
   const [addArtistModal, setAddArtistModal] = useState(false)
   const [statisticType, setStatisticType] = useState(Object.keys(artistList[0].statistics)[0])
@@ -37,6 +38,8 @@ export const LyricApp = ({artistList}) => {
           close={() => setAddArtistModal(false)}
           artists={artists}
           setArtists={setArtists}
+          artistList={artistList}
+          setArtistList={setArtistList}
         />
       </Conditional>
 

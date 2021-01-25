@@ -6,7 +6,7 @@ import {ADD_ARTIST} from "./mutations";
 import randomColor from 'randomcolor'
 import {Conditional} from "./utils";
 
-export const AddArtistModal = ({close, artists, setArtists}) => {
+export const AddArtistModal = ({close, artists, setArtists, artistList, setArtistList}) => {
 
   const [searchTerm, setSearchTerm] = useState("")
   const [error, setError] = useState("")
@@ -16,6 +16,7 @@ export const AddArtistModal = ({close, artists, setArtists}) => {
 
 
   const submitSearch = event => {
+    setError('')
     if(event.key === 'Enter') {
       searchQuery({variables: {artist: searchTerm}})
       setSearchTerm('')
@@ -25,8 +26,12 @@ export const AddArtistModal = ({close, artists, setArtists}) => {
   const addArtist = artist => {
     addArtistMutation({variables: {mbid: artist.mbid, name: artist.name}})
       .then(r => {
-        artists.push({...r.data.addArtist.artist, ...{color: randomColor()}})
+        const newArtist = r.data.addArtist.artist
+        artists.push({...newArtist, ...{color: randomColor()}})
         setArtists([...artists])
+        artistList.push(newArtist)
+        setArtistList([...artistList])
+        console.log(artistList)
         close()
       })
       .catch(e => setError(e.message))

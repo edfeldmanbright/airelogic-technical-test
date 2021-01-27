@@ -12,7 +12,7 @@ describe('Lyric app tests', () => {
 
   test('Lyric app loads', async () => {
     const artistList = mockArtistListResult().data.artistList
-    await act(async () => render(<LyricApp artistList={artistList}/>))
+    await act(async () => render(<LyricApp artistListProp={artistList}/>))
     expect(find('#lyric-app')).not.toBeNull()
   })
 });

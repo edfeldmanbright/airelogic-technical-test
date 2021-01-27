@@ -1,4 +1,5 @@
 import json
+import os
 from unittest.mock import patch
 
 import pytest
@@ -51,13 +52,15 @@ def test_get_lyric_analysis():
 @pytest.mark.external
 @pytest.mark.django_db
 def test_integrated_add_artist_mutation():
+    os.environ['GRAPHQL_KEY'] = 'correct-key'
     client = Client(schema)
     with open('react_app/src/graphql/add-artist-mutation.json') as file:
         query = json.load(file)
     mock = mock_mb_search_result()[0]
     result = client.execute(query, variable_values={
         "mbid": mock['mbid'],
-        "name": mock['name']
+        "name": mock['name'],
+        "graphqlKey": 'correct-key'
     })
     assert not result.get('errors')
     created_artist = Artist.objects.first()

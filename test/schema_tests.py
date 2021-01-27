@@ -1,4 +1,5 @@
 import json
+import os
 from unittest.mock import Mock, patch
 
 import pytest
@@ -43,6 +44,7 @@ def test_artist_search_query():
 
 @pytest.mark.django_db
 def test_add_artist_mutation():
+    os.environ['GRAPHQL_KEY'] = 'correct-key'
     client = Client(schema)
     with open('react_app/src/graphql/add-artist-mutation.json') as file:
         query = json.load(file)
@@ -55,10 +57,27 @@ def test_add_artist_mutation():
         )
         result = client.execute(query, variable_values={
             "mbid": "asfasf-agaeg-asgasgw-asfasg",
-            "name": "Johnny Cash"
+            "name": "Johnny Cash",
+            "graphqlKey": 'correct-key'
         })
     assert not result.get('errors')
     add.assert_called_once()
+
+
+
+@pytest.mark.django_db
+def test_add_artist_mutation_cannot_be_accessed_from_url():
+    client = Client(schema)
+    with open('react_app/src/graphql/add-artist-mutation.json') as file:
+        query = json.load(file)
+    with patch('lyrics.models.Artist.objects.create') as add:
+        result = client.execute(query, variable_values={
+            "mbid": "asfasf-agaeg-asgasgw-asfasg",
+            "name": "Johnny Cash",
+            "graphqlKey": 'abc'
+        })
+    assert 'You cannot add an artist without using the UI' in result.get('errors')[0]['message']
+    add.assert_not_called()
 
 
 @pytest.mark.django_db

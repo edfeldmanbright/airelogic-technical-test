@@ -8,9 +8,11 @@ Pre-requisites:
 - npm 6.14.11
 - python 3
 - empty postgreSQL database named airelogiclyrics with a public schema and all permissions granted to your username
+- Environment variable GRAPHQL_KEY set to non empty string
 
 Clone the repo then run
 ```
+python -m pip install -r requirements.txt
 python manage.py runscript setup_environment
 ```
 

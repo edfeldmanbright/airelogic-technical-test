@@ -94,7 +94,12 @@ export const mockArtistSearchQuery = () => {
 export const mockAddArtistMutation = () => {
   const mutationSpy = jest.fn();
   const mutation = {
-    request: {query: ADD_ARTIST, variables: {name: 'Johnny Cash', mbid: 'abc-abc-abc-abc'}},
+    request: {query: ADD_ARTIST, variables:
+        {
+          name: 'Johnny Cash',
+          mbid: 'abc-abc-abc-abc',
+          graphqlKey: 'correct-key'
+        }},
     result: () => {
       mutationSpy();
       return mockAddArtistResult()

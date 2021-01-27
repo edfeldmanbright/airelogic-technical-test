@@ -1,3 +1,5 @@
+import os
+
 from graphene import Mutation, String, Boolean, ID, Field
 
 from accounts.models import User
@@ -5,16 +7,24 @@ from lyrics.models import Artist
 from lyrics.types import ArtistType
 
 
+class DirectGraphqlInteractionNotAllowed(PermissionError):
+    pass
+
+
 class AddArtist(Mutation):
     class Arguments:
         mbid = String(required=True)
         name = String(required=True)
+        graphql_key = String(required=True)
 
     artist = Field(ArtistType)
 
     @staticmethod
     def mutate(root, info, **kwargs):
+        if kwargs.pop('graphql_key', 'no-key-provided') != os.getenv('GRAPHQL_KEY'):
+            raise DirectGraphqlInteractionNotAllowed('You cannot add an artist without using the UI')
         return AddArtist(artist=Artist.objects.create(**kwargs))
+
 
 
 class Login(Mutation):

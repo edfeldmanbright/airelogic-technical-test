@@ -3,7 +3,7 @@ import logo from '../static/logo.png';
 import {Login, Logout} from "./login-logout";
 import {Conditional} from "./utils";
 import {ArtistLoader} from "./lyric-app";
-import {InfoCard} from "../info-card";;
+import {InfoCard} from "./info-card";;
 
 
 export const Home = ({user}) => {

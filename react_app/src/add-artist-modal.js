@@ -24,14 +24,17 @@ export const AddArtistModal = ({close, artists, setArtists, artistList, setArtis
   }
 
   const addArtist = artist => {
-    addArtistMutation({variables: {mbid: artist.mbid, name: artist.name}})
+    addArtistMutation({variables: {
+      mbid: artist.mbid,
+      name: artist.name,
+      graphqlKey: GRAPHQL_KEY // mocked in jest globals
+    }})
       .then(r => {
         const newArtist = r.data.addArtist.artist
         artists.push({...newArtist, ...{color: randomColor()}})
         setArtists([...artists])
         artistList.push(newArtist)
         setArtistList([...artistList])
-        console.log(artistList)
         close()
       })
       .catch(e => setError(e.message))

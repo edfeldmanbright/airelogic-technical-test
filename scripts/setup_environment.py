@@ -1,3 +1,4 @@
+import json
 import os
 
 from accounts.models import User
@@ -5,13 +6,15 @@ from lyrics.models import Artist
 
 
 def run():
+    with open('react_app/graphql-key.json', 'w+') as file:
+        json.dump(os.getenv('GRAPHQL_KEY'), file)
+
     os.system(
         '''
-        python -m pip install -r requirements.txt
         python manage.py migrate
         cd react_app
         npm install
-        npm start
+        npm run build
         cd ..
         python manage.py collectstatic --no-input
         python sync_schema.py
@@ -28,5 +31,3 @@ def run():
         song_count=686,
         average_word_length=3.76
     ).save()
-
-    os.system('python manage.py runserver')

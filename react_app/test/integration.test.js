@@ -37,7 +37,7 @@ describe('Schema tests', () => {
     mocks.push(mockMutation)
     const {mockQuery, querySpy} = mockArtistSearchQuery()
     mocks.push(mockQuery)
-    await act(async () => render(<LyricApp artistList={artistList}/>))
+    await act(async () => render(<LyricApp artistListProp={artistList}/>))
     expect(find('#statistics-chart')).toBeNull()
     expect(find('#add-artist')).not.toBeNull()
     click('#add-artist')

@@ -34,5 +34,8 @@ module.exports = {
   plugins: [
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new CleanWebpackPlugin(),
-    ]
+    new webpack.DefinePlugin({
+      GRAPHQL_KEY: JSON.stringify(process.env.GRAPHQL_KEY)
+    })
+  ]
 };

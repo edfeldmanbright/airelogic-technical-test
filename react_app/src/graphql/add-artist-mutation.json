@@ -1,1 +1,1 @@
-"mutation addArtist($mbid: String!, $name: String!) { addArtist(mbid: $mbid, name: $name) { artist { name statistics { songCount averageWordLength } } } }"
+"mutation addArtist($graphqlKey: String!, $mbid: String!, $name: String!) { addArtist(graphqlKey: $graphqlKey, mbid: $mbid, name: $name) { artist { name statistics { songCount averageWordLength } } } }"

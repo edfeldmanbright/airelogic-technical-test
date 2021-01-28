@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Card, FormHelperText, LinearProgress, Modal, TextField} from "@material-ui/core";
 import {useLazyQuery, useMutation} from "@apollo/client";
 import {ARTIST_SEARCH_QUERY} from "./queries";
@@ -6,22 +6,13 @@ import {ADD_ARTIST} from "./mutations";
 import randomColor from 'randomcolor'
 import {Conditional} from "./utils";
 
-export const AddArtistModal = ({close, artists, setArtists, artistList, setArtistList}) => {
+export const AddArtistModal = ({close, artists, setArtists, artistList, setArtistList, value}) => {
 
-  const [searchTerm, setSearchTerm] = useState("")
   const [error, setError] = useState("")
 
   const [searchQuery, {loading, data}] = useLazyQuery(ARTIST_SEARCH_QUERY)
   const [addArtistMutation, {loading: mutationLoading}] = useMutation(ADD_ARTIST)
 
-
-  const submitSearch = event => {
-    setError('')
-    if(event.key === 'Enter') {
-      searchQuery({variables: {artist: searchTerm}})
-      setSearchTerm('')
-    }
-  }
 
   const addArtist = artist => {
     addArtistMutation({variables: {
@@ -40,26 +31,21 @@ export const AddArtistModal = ({close, artists, setArtists, artistList, setArtis
       .catch(e => setError(e.message))
   }
 
+  useEffect(() => !data && searchQuery({variables: {artist: value}}))
+
   return (
     <Modal open={true} onClose={close}>
       <Card id='add-artist-modal' className='text-center pt-3'>
-        {loading || mutationLoading
-          ? <>
-              <LinearProgress/>
-              <div>Please be patient, the speed is outside our control!</div>
-            </>
-          : <TextField
-              id='add-artist-input'
-              label='Artist'
-              variant='outlined'
-              autoFocus
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              onKeyPress={e => submitSearch(e)}
-            />
-        }
+
+        <Conditional if={loading || mutationLoading}>
+          <LinearProgress/>
+          <br/>
+          <div>Please be patient, the speed is outside our control!</div>
+        </Conditional>
+
         {error && <FormHelperText className='m-auto text-center' error>{error}</FormHelperText>}
-        <Conditional if={data && !searchTerm && !loading && !mutationLoading}>
+
+        <Conditional if={data && !loading && !mutationLoading}>
           <div id='search-results'>
             <h5 className='pt-3'>
               Did you mean?

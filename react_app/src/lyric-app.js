@@ -21,13 +21,19 @@ export const LyricApp = ({artistListProp}) => {
 
   const [artistList, setArtistList] = useState(artistListProp)
   const [artists, setArtists] = useState([])
-  const [addArtistModal, setAddArtistModal] = useState(false)
+  const [addArtistModal, setAddArtistModal] = useState('')
   const [statisticType, setStatisticType] = useState(Object.keys(artistList[0].statistics)[0])
   const colors = artists.map(() => randomColor())
 
   const onTagsChange = (event, values) => {
-    values.map(v => {if (!v.color) v.color = randomColor()})
-    setArtists(values)
+    const finalValue = values[values.length - 1]
+    if (typeof finalValue == 'string') {
+      setAddArtistModal(finalValue)
+    }
+    else {
+      values.map(v => {if (!v.color) v.color = randomColor()})
+      setArtists(values)
+    }
   }
 
   return (
@@ -35,7 +41,8 @@ export const LyricApp = ({artistListProp}) => {
 
       <Conditional if={addArtistModal}>
         <AddArtistModal
-          close={() => setAddArtistModal(false)}
+          close={() => setAddArtistModal('')}
+          value={addArtistModal}
           artists={artists}
           setArtists={setArtists}
           artistList={artistList}
@@ -47,10 +54,7 @@ export const LyricApp = ({artistListProp}) => {
         <h1 className='py-4'>Choose an artist, or choose more than one to compare...</h1>
         <div className='pb-3'>
           <h6 className='m-auto text-center'>
-            Can't find the artist you're looking for?
-            <b id='add-artist' className='clickable' onClick={() => setAddArtistModal(true)}>
-              {' '}Click here to add them
-            </b>
+            If you're artist doesn't appear in the dropdown, finish typing their name and press enter to add them
           </h6>
         </div>
         <div className='m-auto w-75 mt-2 mb-5'>
@@ -65,6 +69,8 @@ export const LyricApp = ({artistListProp}) => {
             value={artists}
             onChange={onTagsChange}
             limitTags={2}
+            freeSolo
+            autoHighlight
             noOptionsText='No artist found - click above to add manually'
             renderInput={(params) => (
               <TextField

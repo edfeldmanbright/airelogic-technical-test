@@ -14,7 +14,8 @@ class UserManager(BaseUserManager):
         user = User.objects.first()
         if not user.check_password(password):
             raise InvalidPassword("Incorrect passcode")
-        user = authenticate(username=User.objects.first().email, password=password)
+        user = authenticate(
+            username=User.objects.first().email, password=password)
         login(request, user)
         return user
 

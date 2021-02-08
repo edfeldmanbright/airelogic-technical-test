@@ -1,6 +1,6 @@
 import os
 
-from graphene import Mutation, String, Boolean, ID, Field
+from graphene import Mutation, String, Boolean, Field
 
 from accounts.models import User
 from lyrics.models import Artist
@@ -21,10 +21,11 @@ class AddArtist(Mutation):
 
     @staticmethod
     def mutate(root, info, **kwargs):
-        if kwargs.pop('graphql_key', 'no-key-provided') != os.getenv('GRAPHQL_KEY'):
-            raise DirectGraphqlInteractionNotAllowed('You cannot add an artist without using the UI')
+        graphql_key = kwargs.pop('graphql_key', 'no-key-provided')
+        if graphql_key != os.getenv('GRAPHQL_KEY'):
+            raise DirectGraphqlInteractionNotAllowed(
+                'You cannot add an artist without using the UI')
         return AddArtist(artist=Artist.objects.create(**kwargs))
-
 
 
 class Login(Mutation):

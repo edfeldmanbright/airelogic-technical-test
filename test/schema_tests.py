@@ -37,7 +37,8 @@ def test_artist_search_query():
     with open('react_app/src/graphql/artist-search-query.json') as file:
         query = json.load(file)
     with patch('lyrics.queries.mb_search_artist') as search:
-        result = client.execute(query, variable_values={"artist": "Johnny Cash"})
+        result = client.execute(
+            query, variable_values={"artist": "Johnny Cash"})
     assert not result.get('errors')
     search.assert_called_once()
 
@@ -64,7 +65,6 @@ def test_add_artist_mutation():
     add.assert_called_once()
 
 
-
 @pytest.mark.django_db
 def test_add_artist_mutation_cannot_be_accessed_from_url():
     client = Client(schema)
@@ -76,7 +76,8 @@ def test_add_artist_mutation_cannot_be_accessed_from_url():
             "name": "Johnny Cash",
             "graphqlKey": 'abc'
         })
-    assert 'You cannot add an artist without using the UI' in result.get('errors')[0]['message']
+    errors = result.get('errors')[0]['message']
+    assert 'You cannot add an artist without using the UI' in errors
     add.assert_not_called()
 
 

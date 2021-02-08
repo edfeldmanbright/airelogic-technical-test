@@ -6,11 +6,15 @@ from graphene_file_upload.django import FileUploadGraphQLView
 
 from lyrics.views import landing
 
+graphql_view = FileUploadGraphQLView.as_view(graphiql=settings.DEBUG)
+
 urlpatterns = [
-    path('graphql/', csrf_exempt(FileUploadGraphQLView.as_view(graphiql=settings.DEBUG))),
+    path('graphql/', csrf_exempt(graphql_view)),
     re_path(r"^(?:.*)/?$", landing, name='landing'),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_DIR)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.REACT_APP_STATIC_DIR)
+    urlpatterns += static(
+        settings.STATIC_URL, document_root=settings.STATIC_DIR)
+    urlpatterns += static(
+        settings.STATIC_URL, document_root=settings.REACT_APP_STATIC_DIR)

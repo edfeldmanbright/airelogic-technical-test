@@ -9,6 +9,10 @@ headers = {
 }
 
 
+def disambiguate(artist):
+    return artist.get('disambiguation', None) or artist.get('country', None)
+
+
 def mb_search_artist(artist):
     response = requests.get(
         f'https://musicbrainz.org/ws/2/artist?query={artist}&limit=3',
@@ -19,7 +23,7 @@ def mb_search_artist(artist):
         {
             "name": a['name'],
             "mbid": a['id'],
-            "disambiguation": a.get('disambiguation', None) or a.get('country', None)
+            "disambiguation": disambiguate(a)
         }
         for a in artists
     ]
@@ -27,7 +31,8 @@ def mb_search_artist(artist):
 
 def mb_artist_stats(mbid, artist_name):
     response = requests.get(
-        f'https://musicbrainz.org/ws/2/artist/{mbid}?inc=releases+recording-rels',
+        f'https://musicbrainz.org/ws/2/artist/{mbid}'
+        '?inc=releases+recording-rels',
         headers=headers
     )
     data = response.json()

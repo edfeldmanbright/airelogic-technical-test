@@ -5,7 +5,8 @@ from unittest.mock import patch
 import pytest
 from graphene.test import Client
 
-from lyrics.external_apis import mb_search_artist, mb_artist_stats, get_lyric_analysis
+from lyrics.external_apis import (
+    mb_search_artist, mb_artist_stats, get_lyric_analysis)
 from lyrics.models import Artist
 from schema import schema
 from test.mb_mocks import mock_mb_search_result
@@ -28,7 +29,7 @@ def test_integrated_artist_search_query():
 
 
 @pytest.mark.external
-def test_mb_search_artist():
+def test_mb_artist_stats():
     mbid = mock_mb_search_result()[0]['mbid']
     name = mock_mb_search_result()[0]['name']
     with patch('lyrics.external_apis.get_lyric_analysis') as lyric_analysis:

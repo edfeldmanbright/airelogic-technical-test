@@ -23,8 +23,8 @@ def test_landing_view_loads_correct_template_from_any_url(client):
 def test_landing_view_loads_with_host_url(client):
     response = client.get('/')
     assert response.status_code == 200
-    assert json.loads(response.context['json_context'])['HOST_URL'] == "https://mock-site.com"
-
+    json_response = json.loads(response.context['json_context'])
+    assert json_response['HOST_URL'] == "https://mock-site.com"
 
 
 @pytest.mark.django_db
@@ -43,5 +43,3 @@ def test_landing_view_loads_with_authenticated_user_flag_false(client):
     response = client.get('/')
     assert response.status_code == 200
     assert not json.loads(response.context['json_context'])['user']
-
-
